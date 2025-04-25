@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Flights</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #book {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .velvetbluechip-corner {
+            color: #fff;
+            background-color: #4682B4; /* Steel Blue */
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 5px 10px;
+            border-radius: 8px 0 8px 0;
+            font-size: 0.9em;
+        }
+
+        h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+
+        .booking-options {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .option-tab {
+            background: none;
+            border: none;
+            color: #555;
+            padding: 10px 15px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .option-tab.active {
+            color: #4682B4;
+            border-bottom: 2px solid #4682B4;
+        }
+
+        .flight-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        input[type="date"]:disabled {
+            background-color: #eee;
+            color: #777;
+        }
+
+        .travel-reason,
+        .payment-options {
+            margin-bottom: 15px;
+        }
+
+        .travel-reason label,
+        .payment-options label {
+            display: block;
+            margin-bottom: 5px;
+            color: #777;
+        }
+
+        .travel-reason select,
+        .payment-options select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .add-promo {
+            background-color: #f0f0f0;
+            color: #555;
+        }
+
+        .search-flight {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+
+        .search-flight:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="book" class="tabs-content active">
+        <div class="flight-booking-widget">
+            <div class="velvetbluechip-corner">VelvetBlueChip</div>
+            <h3>Book Flights</h3>
+            <div class="booking-options">
+                <button class="option-tab active" data-option="one-way">One Way</button>
+                <button class="option-tab" data-option="round-trip">Round Trip</button>
+                <button class="option-tab" data-option="multi-city">Multi-City</button>
+            </div>
+            <div class="flight-inputs">
+                <div class="input-group">
+                    <label for="from">From</label>
+                    <input type="text" id="from" placeholder="City or airport">
+                </div>
+                <div class="input-group">
+                    <label for="to">To</label>
+                    <input type="text" id="to" placeholder="City or airport">
+                </div>
+                <div class="input-group">
+                    <label for="departure">Departure</label>
+                    <input type="date" id="departure">
+                </div>
+                <div class="input-group">
+                    <label for="return">Return</label>
+                    <input type="date" id="return" disabled>
+                </div>
+                <div class="input-group">
+                    <label for="passengers">Travellers</label>
+                    <input type="number" id="passengers" value="1" min="1">
+                </div>
+                <div class="input-group">
+                    <label for="class">Class</label>
+                    <select id="class">
+                        <option>Economy</option>
+                        <option>Premium Economy</option>
+                        <option>Business</option>
+                    </select>
+                </div>
+            </div>
+            <div class="travel-reason">
+                <label for="travel-reason">I am travelling for</label>
+                <select id="travel-reason">
+                    <option>Leisure</option>
+                    <option>Work</option>
+                    <option>Medical</option>
+                    <option>Other</option>
+                </select>
+            </div>
+            <div class="payment-options">
+                <label for="payment-method">Pay with</label>
+                <select id="payment-method">
+                    <option>Cash</option>
+                    <option>Credit Card</option>
+                    <option>Debit Card</option>
+                    <option value="paypal">PayPal</option>
+                    <option>UPI</option>
+                    <option>Net Banking</option>
+                </select>
+            </div>
+            <div class="actions">
+                <button class="add-promo">Add PROMOCODE</button>
+                <button id="searchBtn" class="search-flight">Search Flights</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const oneWayTab = document.querySelector('[data-option="one-way"]');
+        const roundTripTab = document.querySelector('[data-option="round-trip"]');
+        const multiCityTab = document.querySelector('[data-option="multi-city"]');
+        const returnDateInput = document.getElementById('return');
+        const optionTabs = document.querySelectorAll('.option-tab');
+
+        optionTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                optionTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const selectedOption = this.getAttribute('data-option');
+                if (selectedOption === 'round-trip') {
+                    returnDateInput.disabled = false;
+                } else {
+                    returnDateInput.disabled = true;
+                }
+                document.getElementById('searchBtn').addEventListener('click', function() {
+                    // 1. Get the values from the input fields
+                    const fromCity = document.getElementById('from').value;
+                    const toCity = document.getElementById('to').value;
+                    const departureDate = document.getElementById('departure').value;
+                    const returnDate = document.getElementById('return').value; // Will be empty if one-way
+                    const passengers = document.getElementById('passengers').value;
+                    const travelClass = document.getElementById('class').value;
+                    const travelReason = document.getElementById('travel-reason').value;
+                    const paymentMethod = document.getElementById('payment-method').value;
+                
+                    // 2. Prepare a message with the details
+                    const alertMessage = `Searching flights with the following details:\n\n` +
+                                         `From: ${fromCity}\n` +
+                                         `To: ${toCity}\n` +
+                                         `Departure Date: ${departureDate}\n` +
+                                         `${returnDate ? 'Return Date: ' + returnDate + '\n' : ''}` +
+                                         `Travellers: ${passengers}\n` +
+                                         `Class: ${travelClass}\n` +
+                                         `Reason: ${travelReason}\n` +
+                                         `Payment Method: ${paymentMethod}`;
+                
+                    // 3. Show the alert with the details
+                    alert(alertMessage);
+                
+                    // In a real application, you would now send 'searchData' to your server/API
+                    // as shown in the previous example.
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flight Booking</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .booking-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #343a40;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 16px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert a {
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .alert a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+
+<div class="booking-container">
+    <h2>Retrieve Itinerary using PNR</h2>
+    <p>Change, cancel or customize your bookings in a few simple steps</p>
+
+    <form id="bookingForm">
+        <label for="pnr">PNR / Booking Reference</label>
+        <input type="text" id="pnr" placeholder="Enter PNR or Booking ID" required>
+
+        <label for="lastName">Email ID / Last Name</label>
+        <input type="text" id="lastName" placeholder="Enter Email or Last Name" required>
+
+        <button type="submit">Get Itinerary</button>
+    </form>
+
+    <div id="result" class="result"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Booking form handler (for retrieving itinerary)
+        $('#bookingForm').on('submit', function (e) {
+            e.preventDefault();
+            const pnr = $('#pnr').val().trim();
+            const lastName = $('#lastName').val().trim();
+
+            if (pnr && lastName) {
+                $('#result').html(`
+                    <div class="alert alert-success mt-3">
+                        ✈️ Booking found for <strong>${lastName}</strong> with PNR <strong>${pnr}</strong>.<br>
+                        You can now <a href="manage_reservations.html">view, change, or cancel</a> your trip.
+                    </div>
+                `);
+            } else {
+                $('#result').html(`
+                    <div class="alert alert-danger mt-3">
+                        Please fill out both fields correctly to view your booking.
+                    </div>
+                `);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

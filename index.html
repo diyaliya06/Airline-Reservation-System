@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>velvetbluechip</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-M9N6fJYVdCkYv9SLM99H5Xq+WqT+e1cm4uFJfY3JZg9hxX27m9Id1Mx8vNm8ApIW" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <style>
+body {
+    font-family: sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.center {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+#loginForm input[type="text"],
+#loginForm input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#loginForm button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+#loginForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#mainView {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 960px;
+    margin: 20px auto;
+}
+
+#welcomeText {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.tabs {
+    margin-bottom: 20px;
+}
+
+.tabs-nav {
+    display: flex;
+    border-bottom: 1px solid #ddd;
+}
+
+.tabs-nav button {
+    background: none;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.tabs-nav button.active {
+    color: #007bff;
+    border-bottom: 2px solid #007bff;
+}
+
+.tabs-nav button:hover {
+    color: #007bff;
+}
+
+.tabs-content {
+    display: none;
+    padding: 20px;
+}
+
+.tabs-content.active {
+    display: block;
+}
+
+.flight-booking-widget {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.velvetbluechip-corner {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 0.8em;
+    color: #777;
+}
+
+.flight-booking-widget h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.booking-options {
+    display: flex;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.booking-options button {
+    background: none;
+    border: none;
+    padding: 8px 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #555;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.booking-options button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.booking-options button:hover {
+    background-color: #0056b3;
+    color: white;
+}
+
+.flight-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.input-group input[type="text"],
+.input-group input[type="date"],
+.input-group input[type="number"],
+.input-group select {
+    width: calc(100% - 12px);
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.travel-reason,
+.payment-options {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.travel-reason label,
+.payment-options label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-size: 0.9em;
+}
+
+.travel-reason select,
+.payment-options select {
+    width: calc(100% - 12px);
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.actions button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.add-promo {
+    background-color: #f0ad4e;
+    color: white;
+}
+
+.add-promo:hover {
+    background-color: #e08e0b;
+}
+
+.search-flight {
+    background-color: #28a745;
+    color: white;
+}
+
+.search-flight:hover {
+    background-color: #1e7e34;
+}
+
+.lower-fare-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.lower-fare-container h2 {
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.lower-fare-image {
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.lower-fare-book-button {
+    margin-top: 10px;
+}
+
+.booking-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.booking-container h2 {
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.booking-container p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+#bookingForm label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 0.9em;
+    text-align: left;
+}
+
+#bookingForm input[type="text"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+#bookingForm button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 15px;
+}
+
+#bookingForm button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    text-align: left;
+}
+
+.result h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.result p {
+    color: #555;
+    margin-bottom: 8px;
+}
+</style>
+
+
+<div id="loginView" class="center">
+    <div class="card">
+        <h1 style="text-align:center;">velvetJet  Login</h1>
+        <form id="loginForm">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+
+<div id="mainView" style="display:none;">
+    <h2 id="welcomeText"></h2>
+    <div class="tabs">
+        <div class="tabs-nav">
+            <button data-tab="book">Book</button>
+            <button data-tab="trips">Trips</button>
+            <button data-tab="offers">Offers</button>
+            <button data-tab="checkin">Check-in</button>
+            <button data-tab="velvet">VelvetBlueChip</button>
+        </div>
+
+        <div id="book" class="tabs-content active">
+            <div class="flight-booking-widget">
+                <div class="velvetbluechip-corner">VelvetBlueChip</div>
+                <h3>Book Flights</h3>
+                <div class="booking-options">
+                    <button class="option-tab active" data-option="one-way">One Way</button>
+                    <button class="option-tab" data-option="round-trip">Round Trip</button>
+                    <button class="option-tab" data-option="multi-city">Multi-City</button>
+                </div>
+                <div class="flight-inputs">
+                    <div class="input-group">
+                        <label for="from">From</label>
+                        <input type="text" id="from" placeholder="City or airport">
+                    </div>
+                    <div class="input-group">
+                        <label for="to">To</label>
+                        <input type="text" id="to" placeholder="City or airport">
+                    </div>
+                    <div class="input-group">
+                        <label for="departure">Departure</label>
+                        <input type="date" id="departure">
+                    </div>
+                    <div class="input-group">
+                        <label for="return">Return</label>
+                        <input type="date" id="return" disabled>
+                    </div>
+                    <div class="input-group">
+                        <label for="passengers">Travellers</label>
+                        <input type="number" id="passengers" value="1" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="class">Class</label>
+                        <select id="class">
+                            <option>Economy</option>
+                            <option>Premium Economy</option>
+                            <option>Business</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="travel-reason">
+                    <label for="travel-reason">I am travelling for</label>
+                    <select id="travel-reason">
+                        <option>Leisure</option>
+                        <option>Work</option>
+                        <option>Medical</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="payment-options">
+                    <label for="payment-method">Pay with</label>
+                    <select id="payment-method">
+                        <option>Cash</option>
+                        <option>Credit Card</option>
+                        <option>Debit Card</option>
+                        <option value="paypal">PayPal</option>
+                        <option>UPI</option>
+                        <option>Net Banking</option>
+                    </select>
+                </div>
+                <div class="actions">
+                    <button class="add-promo">Add PROMOCODE</button>
+                    <button id="searchBtn" class="search-flight">Search Flights</button>
+                </div>
+            </div>
+        </div>
+        <div id="trips" class="tabs-content">Your trips and itineraries shown here. <a href="manage_reservations.html">Manage Reservations</a></div>
+        <div id="offers" class="tabs-content">Latest offers and discounts. <a href="offers.html"> offers</div>  
+        <div id="checkin" class="tabs-content">Check-in process page.</div>
+        <div id="velvet" class="tabs-content">VelvetBlueChip loyalty program details. <a href="VelvetBlueChip.html">VelvetBlueChip</a></div>
+    </div>
+
+    <div class="container my-5 lower-fare-container">
+        <h2 class="text-center mb-4">Save on your journey by exploring these routes with lower fares</h2>
+        <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4 col-sm-6">
+                <div class="card h-100 shadow-sm">
+                    <img src="goa.jpg" class="card-img-top lower-fare-image" alt="Delhi to Goa">
+                    <div class="card-body">
+                        <h5 class="card-title">Delhi to Goa</h5>
+                        <p class="card-text text-success fw-bold">Flights starting at ₹8,783</p>
+                        <button class="btn btn-primary w-100 lower-fare-book-button">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="card h-100 shadow-sm">
+                    <img src="munbai.jpg" class="card-img-top lower-fare-image" alt="Delhi to Mumbai">
+                    <div class="card-body">
+                        <h5 class="card-title">Delhi to Mumbai</h5>
+                        <p class="card-text text-success fw-bold">Flights starting at ₹9,046</p>
+                        <button class="btn btn-primary w-100 lower-fare-book-button">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6">
+                <div class="card h-100 shadow-sm">
+                    <img src="GOAA.jpg" class="card-img-top lower-fare-image" alt="Mumbai to Goa">
+                    <div class="card-body">
+                        <h5 class="card-title">Mumbai to Goa</h5>
+                        <p class="card-text text-success fw-bold">Flights starting at ₹8,083</p>
+                        <button class="btn btn-primary w-100 lower-fare-book-button">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="findBookingView" style="display: none;">
+    <div class="booking-container">
+        <h2>Retrieve Itinerary using PNR</h2>
+        <p>Change, cancel or customize your bookings in a few simple steps</p>
+
+        <form id="bookingForm">
+            <label for="pnr">PNR / Booking Reference</label>
+            <input type="text" id="pnr" placeholder="Enter PNR or Booking ID" required>
+
+            <label for="lastName">Email ID / Last Name</label>
+            <input type="text" id="lastName" placeholder="Enter Email or Last Name" required>
+
+            <button type="submit">Get Itinerary</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        // Login form handler
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault();
+            const username = $('input[name="username"]').val();
+            const password = $('input[name="password"]').val();
+
+            if (username && password) {
+                $('#loginView').hide();
+                $('#welcomeText').text('Welcome, ' + username);
+                $('#mainView').show();
+            } else {
+                alert('Invalid username or password.');
+            }
+        });
+
+        // Tab navigation
+        $('.tabs-nav button').on('click', function () {
+            const tab = $(this).data('tab');
+            $('.tabs-content').removeClass('active');
+            $('#' + tab).addClass('active');
+            $('#findBookingView').hide(); // Hide booking form on tab change
+        });
+
+        // Flight booking options handler
+        $('.booking-options .option-tab').on('click', function () {
+            $('.booking-options .option-tab').removeClass('active');
+            $(this).addClass('active');
+            const selectedOption = $(this).data('option');
+
+            $('#return').prop('disabled', selectedOption === 'one-way');
+
+            if (selectedOption === 'multi-city') {
+                console.log('Multi-city option selected');
+                // You would typically add dynamic fields here for multi-city booking
+            }
+        });
+
+        // "Book Now" button click (for lower fares)
+        $('.lower-fare-book-button').on('click', function() {
+            window.location.href = 'booking.html';
+        });
+
+        // Flight search button handler
+        $('#searchBtn').on('click', function () {
+            const from = $('#from').val();
+            const to = $('#to').val();
+            const departure = $('#departure').val();
+            const returnDate = $('#return').val();
+            const passengers = $('#passengers').val();
+            const travelClass = $('#class').val();
+            const travelReason = $('#travel-reason').val();
+            const paymentMethod = $('#payment-method').val();
+
+            if (paymentMethod === 'paypal') {
+                window.location.href = 'paypal_payment.html'; // Redirect to PayPal page
+            } else {
+                // In a real application, you would send this data to a server
+                alert(`Searching flights:\nFrom: ${from}\nTo: ${to}\nDeparture: ${departure}\nReturn: ${returnDate}\nTravellers: ${passengers}\nClass: ${travelClass}\nReason: ${travelReason}\nPayment: ${paymentMethod}`);
+                window.location.href = 'confirmation.html'; // Redirect to confirmation page after "search"
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
